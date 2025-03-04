@@ -1,15 +1,9 @@
-import './App.css'
-
 function App() {
-  const message = 'Test'
-
   return (
-    <ul>
-      {items.map((value, index) => {
-        return <li key={index}>{value}</li>
-      })}
-    </ul>
-  )
+    <div>
+      <h1>Popular Movies App</h1>
+    </div>
+  );
 }
 
-export default App
+export default App;

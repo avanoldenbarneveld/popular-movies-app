@@ -6,12 +6,20 @@ const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
 function HomePage() {
     const [movies, setMovies] = useState([]);
+    const [filteredMovies, setFilteredMovies] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
     const [sortOption, setSortOption] = useState("popularity");
 
     useEffect(() => {
         fetchPopularMovies().then(data => {
+            setMovies(data);
+            setFilteredMovies(data);
             sortMovies(data, sortOption);
         });
+    }, []);
+
+    useEffect(() => {
+        sortMovies(filteredMovies, sortOption);
     }, [sortOption]);
 
     const sortMovies = (movies, option) => {
@@ -22,7 +30,18 @@ function HomePage() {
                 return b.popularity - a.popularity;
             }
         });
-        setMovies(sortedMovies);
+        setFilteredMovies(sortedMovies);
+    };
+
+    const handleSearch = (e) => {
+        const query = e.target.value.toLowerCase();
+        setSearchQuery(query);
+
+        const filtered = movies.filter(movie =>
+            movie.title.toLowerCase().includes(query)
+        );
+
+        sortMovies(filtered, sortOption);
     };
 
     return (
@@ -30,15 +49,23 @@ function HomePage() {
             <h1>Popular Movies</h1>
 
             <div style={{ marginBottom: "20px" }}>
-                <select value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+                <input
+                    type="text"
+                    placeholder="Search movies..."
+                    value={searchQuery}
+                    onChange={handleSearch}
+                    className="search-input"
+                />
+                
+                <select value={sortOption} onChange={(e) => setSortOption(e.target.value)} className="sort-dropdown">
                     <option value="popularity">Sort by Popularity</option>
                     <option value="rating">Sort by Rating</option>
                 </select>
             </div>
 
             <div className="movies-grid">
-                {movies.length > 0 ? (
-                    movies.map(movie => (
+                {filteredMovies.length > 0 ? (
+                    filteredMovies.map(movie => (
                         <div key={movie.id} className="movie-card">
                             <Link to={`/movie/${movie.id}`}>
                                 <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} />
@@ -47,7 +74,7 @@ function HomePage() {
                         </div>
                     ))
                 ) : (
-                    <p>Loading movies...</p>
+                    <p>No results found.</p>
                 )}
             </div>
         </div>

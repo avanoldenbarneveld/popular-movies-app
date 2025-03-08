@@ -1,35 +1,42 @@
-# popular-movies-app
-A simple web application built with React that displays a list of popular movies fetched from an external API. Users can browse, search, and view details about their favorite movies.
+# Popular Movies App
+
+[Live Demo](https://popular-movies-jkjcem6me-albertusdixits-projects.vercel.app)  
+
+A simple web application built with **React** that displays a list of popular movies fetched from the **TMDB API**. Users can browse, search, and view details about their favorite movies.
 
 ## Features
+### View Popular Movies
+- Displays a list of the most popular movies based on ratings and views.
+- Homepage features a responsive grid layout with clickable movie cards.
 
-1. **View Popular Movies**
-   - Users can view a list of the most popular movies based on ratings and views.  
-   - The homepage will feature a section for popular movies, with a filter to sort them by popularity.
+### Movie Details
+- Users can view detailed information about a selected movie.
+- Includes title, synopsis, release date, and rating.
 
-2. **View Top Rated Movies**
-   - Users can view a list of the highest-rated movies based on reviews and ratings.  
-   - A page will display the top-rated movies with a filter to sort them by rating.
-
-3. **View Upcoming Movies**
-   - Users can view a list of upcoming movie releases.  
-   - A page will display upcoming movies, with sorting options by release date and pagination for navigation.
-
-4. **Save Favorite Movies**
-   - Users can save their favorite movies to a personalized list.  
-   - A button to add or remove movies from the favorite list, along with a user profile page displaying the list of favorites.
-
-5. **Movie Details**
-   - Users can view detailed information about a selected movie.  
-   - The movie details page includes title, synopsis, trailer, cast, reviews, and ratings.
-
-6. **Find Nearby Theaters**
-   - From the movie details page, users can see the nearest theaters where the movie is being shown.  
-   - The page will show an embedded Google Map with locations of the nearest theaters.
+### Future Features (Planned)
+- **View Top Rated Movies** – Filter movies by user ratings.  
+- **View Upcoming Movies** – Show a list of upcoming releases with sorting and pagination.  
+- **Save Favorite Movies** – Let users save their favorite movies to a personalized list.  
+- **Find Nearby Theaters** – Show nearby theaters where the movie is being played using Google Maps.  
 
 ## Technology Stack
-- React
-- Vite
-- TypeScript
-- API Integration for movie data
-- Google Maps for theater locations
+- **React** – Frontend framework  
+- **Vite** – Fast build tool  
+- **Axios** – HTTP client for API integration  
+- **TMDB API** – External movie database  
+
+## Installation
+1. Clone the repository  
+2. Install dependencies:  
+```sh
+npm install
+```
+3. Start the development server:  
+```sh
+npm run dev
+```
+4. Open in your browser:  
+```
+http://localhost:5173
+```
+

@@ -9,12 +9,14 @@ function HomePage() {
     const [filteredMovies, setFilteredMovies] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [sortOption, setSortOption] = useState("popularity");
+    const [favorites, setFavorites] = useState([]);
 
     useEffect(() => {
         fetchPopularMovies().then(data => {
             setMovies(data);
             setFilteredMovies(data);
             sortMovies(data, sortOption);
+            loadFavorites();
         });
     }, []);
 
@@ -44,6 +46,26 @@ function HomePage() {
         sortMovies(filtered, sortOption);
     };
 
+    const toggleFavorite = (movie) => {
+        let updatedFavorites;
+        if (favorites.some(fav => fav.id === movie.id)) {
+            updatedFavorites = favorites.filter(fav => fav.id !== movie.id);
+        } else {
+            updatedFavorites = [...favorites, movie];
+        }
+        setFavorites(updatedFavorites);
+        saveFavorites(updatedFavorites);
+    };
+
+    const saveFavorites = (favorites) => {
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+    };
+
+    const loadFavorites = () => {
+        const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        setFavorites(storedFavorites);
+    };
+
     return (
         <div className="container">
             <h1>Popular Movies</h1>
@@ -71,6 +93,14 @@ function HomePage() {
                                 <img src={`${IMAGE_BASE_URL}${movie.poster_path}`} alt={movie.title} />
                                 <h3>{movie.title}</h3>
                             </Link>
+                            <button
+                                className={`favorite-button ${
+                                    favorites.some(fav => fav.id === movie.id) ? "favorited" : ""
+                                }`}
+                                onClick={() => toggleFavorite(movie)}
+                            >
+                                {favorites.some(fav => fav.id === movie.id) ? "Remove from Favorites" : "Add to Favorites"}
+                            </button>
                         </div>
                     ))
                 ) : (

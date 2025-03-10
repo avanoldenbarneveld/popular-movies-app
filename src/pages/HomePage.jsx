@@ -70,6 +70,10 @@ function HomePage() {
         <div className="container">
             <h1>Popular Movies</h1>
 
+            <Link to="/favorites" className="favorites-link">
+                View Favorites
+            </Link>
+
             <div style={{ marginBottom: "20px" }}>
                 <input
                     type="text"

@@ -6,8 +6,4 @@ if (typeof TextEncoder === 'undefined') {
   global.TextDecoder = TextDecoder;
 }
 
-globalThis.importMeta = {
-  env: {
-    VITE_TMDB_API_KEY: 'test-api-key'
-  }
-};
+process.env.VITE_TMDB_API_KEY = 'test-api-key';

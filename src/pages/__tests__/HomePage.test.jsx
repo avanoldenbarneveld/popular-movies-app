@@ -37,18 +37,38 @@ test('handles sorting by rating', async () => {
         </MemoryRouter>
     );
 
-    // Get the sorting dropdown
+
     const select = screen.getByRole('combobox');
 
-    // Change the value to "rating"
     await act(async () => {
         fireEvent.change(select, { target: { value: 'rating' } });
     });
 
-    // Wait for the state to update and assert sorting order
+
     await waitFor(() => {
         const movies = screen.getAllByRole('heading', { level: 3 });
-        expect(movies[0]).toHaveTextContent('Movie One'); // Highest rated movie should be first
+        expect(movies[0]).toHaveTextContent('Movie One'); 
         expect(movies[1]).toHaveTextContent('Movie Two');
+    });
+});
+
+test('handles adding to favorites', async () => {
+    render(
+        <MemoryRouter>
+            <HomePage />
+        </MemoryRouter>
+    );
+
+
+    const buttons = await screen.findAllByText('Add to Favorites');
+
+
+    await act(async () => {
+        fireEvent.click(buttons[0]);
+    });
+
+
+    await waitFor(() => {
+        expect(screen.getByText('Remove from Favorites')).toBeInTheDocument();
     });
 });

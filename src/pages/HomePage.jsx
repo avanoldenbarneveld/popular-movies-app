@@ -48,14 +48,27 @@ function HomePage() {
     };
 
     const toggleFavorite = (movie) => {
-        let updatedFavorites;
-        if (favorites.some(fav => fav.id === movie.id)) {
-            updatedFavorites = favorites.filter(fav => fav.id !== movie.id);
-        } else {
-            updatedFavorites = [...favorites, movie];
-        }
-        setFavorites(updatedFavorites);
-        saveFavorites(updatedFavorites);
+        setFavorites((prevFavorites) => {
+            const updatedFavorites = prevFavorites.some(fav => fav.id === movie.id)
+                ? prevFavorites.filter(fav => fav.id !== movie.id)
+                : [...prevFavorites, movie];
+
+            saveFavorites(updatedFavorites);
+
+            setFilteredMovies((prevMovies) =>
+                prevMovies.map(m =>
+                    m.id === movie.id
+                        ? { ...m, isFavorite: updatedFavorites.some(fav => fav.id === m.id) }
+                        : m
+                )
+            );
+
+            return updatedFavorites;
+        });
+
+        setTimeout(() => {
+            setFilteredMovies((prevMovies) => [...prevMovies]);
+        }, 0);
     };
 
     const saveFavorites = (favorites) => {
